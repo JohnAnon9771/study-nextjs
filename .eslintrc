@@ -1,0 +1,10 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": "eslint-config-johnanon",
+  "rules": {
+    "react/react-in-jsx-scope": 0
+  }
+}
