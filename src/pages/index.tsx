@@ -1,15 +1,47 @@
-import { useState } from 'react';
+import { GetStaticProps } from 'next';
+import Head from 'next/head';
 
-const Home: React.FC = () => {
-  const [count, setCount] = useState(0);
+import Layout, { siteTitle } from '../components/Layout';
 
+import { getSortedPostsData } from '../lib/posts';
+
+export default function Home({ data }): JSX.Element {
   return (
-    <div>
-      <button onClick={() => setCount(state => state + 1)}>+</button>
-      <p>{count}</p>
-      <button onClick={() => setCount(state => state - 1)}>-</button>
-    </div>
+    <Layout home>
+      <Head>
+        <title>{siteTitle}</title>
+      </Head>
+      <section>
+        <p>[Your Self Introduction]</p>
+        <p>
+          (This is a sample website - you’ll be building a site like this on{' '}
+          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
+        </p>
+      </section>
+      <section>
+        <h2>Blog</h2>
+        <ul>
+          {data.map(({ id, date, title }) => (
+            <li key={id}>
+              {title}
+              <br />
+              {id}
+              <br />
+              {date}
+            </li>
+          ))}
+        </ul>
+      </section>
+    </Layout>
   );
-};
+}
 
-export default Home;
+export const getStaticProps: GetStaticProps = async () => {
+  const allPostsData = getSortedPostsData();
+  return {
+    props: {
+      data: allPostsData,
+    },
+    revalidate: 10,
+  };
+};
