@@ -9,7 +9,7 @@ const name = 'João Alves';
 export const siteTitle = 'Next.js Sample Website';
 
 interface Props {
-  home: boolean;
+  home?: boolean;
   children?: ReactNode;
 }
 

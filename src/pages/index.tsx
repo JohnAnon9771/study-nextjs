@@ -1,11 +1,24 @@
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
+import Link from 'next/link';
 
+import { Date } from '../components/Date';
 import Layout, { siteTitle } from '../components/Layout';
 
 import { getSortedPostsData } from '../lib/posts';
 
-export default function Home({ data }): JSX.Element {
+export interface DataProps {
+  id: string;
+  title: string;
+  date: string;
+  content: string;
+}
+
+interface Props {
+  data: DataProps[];
+}
+
+export default function Home({ data }: Props): JSX.Element {
   return (
     <Layout home>
       <Head>
@@ -23,11 +36,15 @@ export default function Home({ data }): JSX.Element {
         <ul>
           {data.map(({ id, date, title }) => (
             <li key={id}>
-              {title}
+              <Link href={`/posts/${id}`}>
+                <a>{title}</a>
+              </Link>
               <br />
               {id}
               <br />
-              {date}
+              <small>
+                <Date date={date} />
+              </small>
             </li>
           ))}
         </ul>
